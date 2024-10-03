@@ -36,7 +36,10 @@ const Header = () => {
             </Link>
           ))}
 
-          <Button className="w-28 h-10 uppercase" />
+          {/* Enroll Now Button */}
+          <Link to="/enroll">
+            <Button title="Enroll Now" className="w-28 h-10 uppercase" />
+          </Link>
         </div>
       </div>
     </header>

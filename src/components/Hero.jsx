@@ -15,7 +15,7 @@ const Hero = () => {
     <div className="w-full bg-hero-image bg-cover">
       <Container className="py-20">
         <div className="w-1/2 flex flex-col gap-y-5">
-          <p className="text-base uppercase text-white   text-3xl">
+          <p className="text-base uppercase text-white text-3xl">
             DELHI NCR COLLEGE GUIDE
           </p>
           <h2 className="text-7xl font-bold text-white">
@@ -42,7 +42,10 @@ const Hero = () => {
             personalized recommendations to help you make the best decision for
             your future.
           </p>
-          <Button className="w-40 h-14" />
+          {/* Adding an anchor link to scroll to the Enroll section */}
+          <a href="#Working">
+            <Button title="Enroll Now" className="w-40 h-14" />
+          </a>
         </div>
       </Container>
     </div>
