@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
 import Button from "./ui/Button";
 import { useLocation } from "react-router-dom";
@@ -17,30 +17,56 @@ const Header = () => {
 
   return (
     <header className="w-full h-20 bg-[#16181C]/90 backdrop-blur-2xl sticky top-0 z-50">
-      <div className="h-full max-w-screen-xl mx-auto flex items-center justify-between">
+      <div className="h-full max-w-screen-xl mx-auto flex items-center justify-between px-4 md:px-8">
+        {/* Logo */}
         <div>
-          <Link to={"/"}>
+          <NavLink to="/">
             <img src={logo} alt="logo" className="w-24" />
-          </Link>
+          </NavLink>
         </div>
+
+        {/* Navigation Links */}
         <div className="flex items-center gap-6">
-          {navigationArray.map(({ title, link }) => (
-            <Link key={link} to={link}>
-              <p
-                className={`${
-                  pathname === link ? "text-designColor" : "text-lightText"
-                } text-sm uppercase font-semibold hover:text-designColor cursor-pointer duration-300`}
+          <nav className="hidden md:flex gap-6">
+            {navigationArray.map(({ title, link }) => (
+              <NavLink
+                key={link}
+                to={link}
+                className={({ isActive }) =>
+                  `${
+                    isActive ? "text-designColor" : "text-lightText"
+                  } text-sm uppercase font-semibold hover:text-designColor cursor-pointer duration-300`
+                }
               >
                 {title}
-              </p>
-            </Link>
-          ))}
+              </NavLink>
+            ))}
+          </nav>
 
           {/* Enroll Now Button */}
-          <Link to="/enroll">
+          <NavLink to="/enroll">
             <Button title="Enroll Now" className="w-28 h-10 uppercase" />
-          </Link>
+          </NavLink>
         </div>
+      </div>
+
+      {/* Mobile Navigation */}
+      <div className="md:hidden flex items-center justify-between px-4">
+        <nav className="flex gap-4">
+          {navigationArray.map(({ title, link }) => (
+            <NavLink
+              key={link}
+              to={link}
+              className={({ isActive }) =>
+                `${
+                  isActive ? "text-designColor" : "text-lightText"
+                } text-sm uppercase font-semibold hover:text-designColor cursor-pointer duration-300`
+              }
+            >
+              {title}
+            </NavLink>
+          ))}
+        </nav>
       </div>
     </header>
   );

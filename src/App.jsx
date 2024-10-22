@@ -2,7 +2,7 @@ import AboutMe from "./components/AboutMe";
 import ContactMe from "./components/ContactMe";
 import Features from "./components/Features";
 import Hero from "./components/Hero";
-import Enroll from "./components/AboutMe"; // Renamed StudentForm to Enroll
+//import Form from "./components/Form"; // Correctly importing the Form component
 
 function App() {
   return (
@@ -10,8 +10,8 @@ function App() {
       <Hero />
       <AboutMe />
       <Features />
+  
       <ContactMe />
-      <Enroll /> {/* Directly render the form */}
     </div>
   );
 }

@@ -3,6 +3,7 @@ import Container from "./Container";
 import { Typewriter } from "react-simple-typewriter";
 import Button from "./ui/Button";
 
+
 const Hero = () => {
   const words = [
     "Top Colleges in Delhi NCR",
@@ -43,7 +44,7 @@ const Hero = () => {
             your future.
           </p>
           {/* Adding an anchor link to scroll to the Enroll section */}
-          <a href="#Working">
+          <a href="">
             <Button title="Enroll Now" className="w-40 h-14" />
           </a>
         </div>
