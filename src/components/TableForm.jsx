@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const EnrollForm = () => {
   const [formData, setFormData] = useState({
@@ -11,36 +12,12 @@ const EnrollForm = () => {
     college: "",
   });
 
-  const [currentStep, setCurrentStep] = useState(0);
-
   const statesOfIndia = [
-    "Andhra Pradesh",
-    "Arunachal Pradesh",
-    "Assam",
-    "Bihar",
-    "Chhattisgarh",
-    "Goa",
-    "Gujarat",
-    "Haryana",
-    "Himachal Pradesh",
-    "Jharkhand",
-    "Karnataka",
-    "Kerala",
-    "Madhya Pradesh",
-    "Maharashtra",
-    "Manipur",
-    "Meghalaya",
-    "Mizoram",
-    "Nagaland",
-    "Odisha",
-    "Punjab",
-    "Rajasthan",
-    "Sikkim",
-    "Tamil Nadu",
-    "Telangana",
-    "Tripura",
-    "Uttar Pradesh",
-    "Uttarakhand",
+    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
+    "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka",
+    "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya",
+    "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim",
+    "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand",
     "West Bengal",
   ];
 
@@ -54,163 +31,185 @@ const EnrollForm = () => {
     });
   };
 
-  const handleNextStep = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setCurrentStep((prevStep) => prevStep + 1);
+    try {
+      const response = await axios.post("http://localhost:5000/api/enroll", formData);
+      alert(response.data.message);
+      setFormData({
+        fullName: "",
+        score: "",
+        state: "",
+        email: "",
+        phone: "",
+        course: "",
+        college: "",
+      });
+    } catch (error) {
+      alert("Error submitting form");
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formData);
-    alert("Form Submitted Successfully!");
-  };
+  // Bubble animation effect
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const bubble = document.createElement("div");
+      bubble.className = "bubble";
+      document.body.appendChild(bubble);
+      setTimeout(() => bubble.remove(), 4000);
+    }, 500);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-900">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 overflow-hidden relative">
       <form
-        onSubmit={currentStep === 6 ? handleSubmit : handleNextStep}
-        className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-lg transition-transform transform hover:scale-105"
+        onSubmit={handleSubmit}
+        className="bg-white bg-opacity-10 backdrop-blur-lg p-8 rounded-lg shadow-2xl w-full max-w-md border border-white border-opacity-20 transition-transform duration-700 ease-out transform hover:scale-105"
+        style={{
+          animation: "fadeIn 1.5s ease-in-out",
+          backdropFilter: "blur(20px)",
+          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.4)",
+        }}
       >
-        <h2 className="text-2xl font-bold mb-6 text-center text-white">Enroll Now</h2>
+        <h2 className="text-3xl font-semibold mb-8 text-center text-white">Enroll Now</h2>
 
         {/* Full Name */}
-        {currentStep === 0 && (
-          <div className="mb-4">
-            <label className="block text-gray-300 mb-2" htmlFor="fullName">
-              Full Name
-            </label>
-            <input
-              type="text"
-              name="fullName"
-              id="fullName"
-              className="w-full px-3 py-2 border border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
-              placeholder="Enter your full name"
-              value={formData.fullName}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-        )}
+        <div className="mb-4">
+          <input
+            type="text"
+            name="fullName"
+            placeholder="Full Name"
+            value={formData.fullName}
+            onChange={handleInputChange}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-transparent text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
 
-        {/* +2/JEE Score */}
-        {currentStep === 1 && (
-          <div className="mb-4">
-            <label className="block text-gray-300 mb-2" htmlFor="score">
-              +2 / JEE Score
-            </label>
-            <input
-              type="number"
-              name="score"
-              id="score"
-              className="w-full px-3 py-2 border border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
-              placeholder="Enter your +2 or JEE score"
-              value={formData.score}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-        )}
+        {/* Score */}
+        <div className="mb-4">
+          <input
+            type="number"
+            name="score"
+            placeholder="+2 / JEE Score"
+            value={formData.score}
+            onChange={handleInputChange}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-transparent text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
 
         {/* Preferred State */}
-        {currentStep === 2 && (
-          <div className="mb-4">
-            <label className="block text-gray-300 mb-2" htmlFor="state">
-              Preferred State
-            </label>
-            <select
-              name="state"
-              id="state"
-              className="w-full px-3 py-2 border border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
-              value={formData.state}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="" disabled>
-                Select your preferred state
-              </option>
-              {statesOfIndia.map((state, index) => (
-                <option key={index} value={state}>
-                  {state}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
+        <div className="mb-4">
+          <select
+            name="state"
+            value={formData.state}
+            onChange={handleInputChange}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-transparent text-red-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
+            <option value="" disabled>Select Preferred State</option>
+            {statesOfIndia.map((state, index) => (
+              <option key={index} value={state}>{state}</option>
+            ))}
+          </select>
+        </div>
 
-        {/* College Selection */}
-        {currentStep === 3 && (
-          <div className="mb-4">
-            <label className="block text-gray-300 mb-2" htmlFor="college">
-              Choose College
-            </label>
-            <select
-              name="college"
-              id="college"
-              className="w-full px-3 py-2 border border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
-              value={formData.college}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="" disabled>
-                Select your college
-              </option>
-              {colleges.map((college, index) => (
-                <option key={index} value={college}>
-                  {college}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
+        {/* Email */}
+        <div className="mb-4">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleInputChange}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-transparent text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
 
-        {/* Email Address */}
-        {currentStep === 4 && (
-          <div className="mb-4">
-            <label className="block text-gray-300 mb-2" htmlFor="email">
-              Email Address
-            </label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              className="w-full px-3 py-2 border border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
-              placeholder="Enter your email address"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-        )}
+        {/* Phone */}
+        <div className="mb-4">
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Phone"
+            value={formData.phone}
+            onChange={handleInputChange}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-transparent text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
 
-        {/* Phone Number */}
-        {currentStep === 5 && (
-          <div className="mb-4">
-            <label className="block text-gray-300 mb-2" htmlFor="phone">
-              Phone Number
-            </label>
-            <input
-              type="tel"
-              name="phone"
-              id="phone"
-              className="w-full px-3 py-2 border border-red-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600"
-              placeholder="Enter your phone number"
-              value={formData.phone}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-        )}
+        {/* Course */}
+        <div className="mb-4">
+          <input
+            type="text"
+            name="course"
+            placeholder="Course"
+            value={formData.course}
+            onChange={handleInputChange}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-transparent text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+        </div>
+
+        {/* College */}
+        <div className="mb-4">
+          <select
+            name="college"
+            value={formData.college}
+            onChange={handleInputChange}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-transparent text-red-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          >
+            <option value="" disabled>Select College</option>
+            {colleges.map((college, index) => (
+              <option key={index} value={college}>{college}</option>
+            ))}
+          </select>
+        </div>
 
         {/* Submit Button */}
-        <div className="text-center">
+        <div className="text-center mt-6">
           <button
             type="submit"
-            className="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-200 ease-in-out transform hover:scale-105"
+            className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-transform duration-200 ease-in-out transform hover:scale-105"
           >
-            {currentStep === 6 ? "Submit" : "Next"}
+            Enroll
           </button>
         </div>
       </form>
+
+      {/* Bubbles */}
+      <style>
+        {`
+          .bubble {
+            position: absolute;
+            bottom: -10px;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: rise 4s infinite ease-in-out;
+            left: ${Math.random() * 100}%;
+            transform: scale(${Math.random() * 0.7 + 0.3});
+          }
+
+          @keyframes rise {
+            0% { transform: translateY(0); opacity: 0.4; }
+            50% { opacity: 0.7; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+          }
+
+          @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+          }
+        `}
+      </style>
     </div>
   );
 };
