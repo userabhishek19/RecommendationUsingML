@@ -5,7 +5,7 @@ import Title from "./ui/Title";
 import { AiOutlineMenu } from "react-icons/ai";
 import { IoMdArrowRoundForward } from "react-icons/io";
 import { IoBookOutline } from "react-icons/io5";
-import { featuresData } from "../constant/data"; // Ensure to update this to reflect college features
+import { featuresData } from "../constant/data"; 
 import FeatureCard from "./FeatureCard";
 
 const Features = () => {
