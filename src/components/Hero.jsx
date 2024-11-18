@@ -3,7 +3,6 @@ import Container from "./Container";
 import { Typewriter } from "react-simple-typewriter";
 import Button from "./ui/Button";
 
-
 const Hero = () => {
   const words = [
     "Top Colleges in Delhi NCR",
@@ -43,8 +42,12 @@ const Hero = () => {
             personalized recommendations to help you make the best decision for
             your future.
           </p>
-          {/* Adding an anchor link to scroll to the Enroll section */}
-          <a href="./components">
+          {/* Updated the link to point to the Streamlit app */}
+          <a
+            href="https://collegerecommend-ervmaggb8rkdpgskvushkh.streamlit.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <Button title="Enroll Now" className="w-40 h-14" />
           </a>
         </div>
