@@ -5,7 +5,7 @@ import Button from "./ui/Button";
 
 const Hero = () => {
   const words = [
-    "Top Colleges in Delhi NCR",
+    "Top Colleges in INDIA",
     "Personalized College Suggestions",
     "Best Fit for Your Academic Goals",
     "Explore Various Fields of Study",
@@ -16,7 +16,7 @@ const Hero = () => {
       <Container className="py-20">
         <div className="w-1/2 flex flex-col gap-y-5">
           <p className="text-base uppercase text-white text-3xl">
-            DELHI NCR COLLEGE GUIDE
+             COLLEGE GUIDE
           </p>
           <h2 className="text-7xl font-bold text-white">
             Welcome to the{" "}
@@ -45,7 +45,7 @@ const Hero = () => {
           {/* Updated the link to point to the Streamlit app */}
           <a
             href="https://collegerecommend-ervmaggb8rkdpgskvushkh.streamlit.app/"
-            target="_blank"
+            target="_self"
             rel="noopener noreferrer"
           >
             <Button title="Enroll Now" className="w-40 h-14" />

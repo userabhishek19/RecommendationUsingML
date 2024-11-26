@@ -1,24 +1,46 @@
 import React, { useState } from "react";
+import axios from "axios";
 import Subtitle from "./ui/Subtitle";
 import Title from "./ui/Title";
 import Container from "./Container";
-import { contact1 } from "../assets/getImage"; // Update if necessary
+import { contact1 } from "../assets/getImage";
 import SocialIcon from "./ui/SocialIcon";
 
 const ContactMe = () => {
   const [userName, setUserName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [collegeName, setCollegeName] = useState(""); // Changed subject to college name
-  const [message, setMessage] = useState(""); // Changed messages to message
+  const [collegeName, setCollegeName] = useState("");
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState("");  // To store the success/error message
 
-  const handleSubmit = () => {
-    console.log(userName, phone, email, collegeName, message);
-    setUserName("");
-    setPhone("");
-    setEmail("");
-    setCollegeName("");
-    setMessage("");
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    setStatus(""); // Reset status before submitting
+
+    try {
+      // Send POST request to the server
+      const response = await axios.post("http://localhost:5000/api/contact", {
+        userName,
+        phone,
+        email,
+        collegeName,
+        message,
+      });
+
+      // On successful submission, show success message and clear form
+      setStatus("Message sent successfully!");
+      setUserName("");
+      setPhone("");
+      setEmail("");
+      setCollegeName("");
+      setMessage("");
+    } catch (error) {
+      // If error occurs, show failure message
+      console.error("Error submitting form:", error);
+      setStatus("There was an issue with submitting your message. Please try again.");
+    }
   };
 
   return (
@@ -112,6 +134,7 @@ const ContactMe = () => {
           >
             Send Message
           </button>
+          {status && <p className="mt-4 text-center text-sm text-white">{status}</p>} {/* Display status message */}
         </div>
       </div>
     </Container>

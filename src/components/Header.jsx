@@ -10,7 +10,6 @@ const Header = () => {
   const navigationArray = [
     { title: "Home", link: "/" },
     { title: "About", link: "/about" },
-    { title: "Colleges", link: "/colleges" },
     { title: "Services", link: "/services" },
     { title: "Contact", link: "/contact" },
   ];
@@ -44,9 +43,13 @@ const Header = () => {
           </nav>
 
           {/* Enroll Now Button */}
-          <NavLink to="/enroll">
+          <a
+            href="https://collegerecommend-ervmaggb8rkdpgskvushkh.streamlit.app/"
+            target="_self"
+            rel="noopener noreferrer"
+          >
             <Button title="Enroll Now" className="w-28 h-10 uppercase" />
-          </NavLink>
+          </a>
         </div>
       </div>
 
